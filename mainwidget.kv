@@ -1,0 +1,168 @@
+#:kivy 2.3.0
+
+<MainWidget>:
+    orientation:'vertical'
+    canvas:
+        Color:
+            rgb: 1,1,1
+        Rectangle:
+            size:self.size
+    BoxLayout:
+        orientation:'horizontal'
+        size_hint: (1,0.1)
+        spacing: 10
+        Label:
+            text:'Bancada Sistemas Hidráulicos'
+            font_size: 22
+            color: 0,0,0,1
+            size_hint_x: None #não definir
+            width: 300   #largura de 300 pixels
+        BoxLayout:
+            orientation:'vertical'
+            size_hint_x: None
+            width: 400
+            Label:
+                text:'Configurações'
+                color: 0,0,0,1
+                font_size: 18
+            BoxLayout
+                orientation:'horizontal'
+                Button:
+                    color: 0,0,0,1
+                    text:"MODBUS"
+                    font_size: 15
+                    on_release:root._modbusPopup.open()
+                Button:
+                    color: 0,0,0,1
+                    text:"ScanTime"
+                    font_size: 15
+                    on_release:root._scanPoPup.open()
+                Button:
+                    font_size: 13
+                    text: "Comando da Bomba"
+                    on_release:root._comandobomba.open()
+        Image:
+            id:img_con
+            size_hint_x:None
+            width:80
+            source:'imagens/Desconectado.jpeg'
+            pos_hint: {'top':1, 'right':1}
+
+    FloatLayout:
+        canvas:
+            Color:
+                rgb: 0.5,0.5,0.5
+            Rectangle:
+                size:self.size
+        Image:
+            id:mapa
+            source:'imagens/Mapa.png'
+        
+        Image:
+            id:regua_d
+            source:'imagens/regua.png'
+            pos_hint:{'x':-0.4025,'y':0.21}
+        Label:
+            id:lb_temp1
+            size_hint: (None,None)
+            width:15
+            height:0
+
+            pos_hint:{'x':0.06,'y':0.577}
+            canvas:
+                Color:
+                    rgb:0,0,1
+                Rectangle:
+                    size:self.size
+                    pos:(self.pos[0]+self.width*1.5,self.pos[1])
+        Image:
+            id:regua_e
+            source:'imagens/regua.png'
+            pos_hint:{'x':0.3,'y':0.08}
+        Label:
+            id:lb_temp2
+            size_hint: (None,None)
+            width:15
+            height:0
+
+            pos_hint:{'x':0.7625,'y':0.45}
+            canvas:
+                Color:
+                    rgb:0,0,1
+                Rectangle:
+                    size:self.size
+                    pos:(self.pos[0]+self.width*1.5,self.pos[1])
+        Button:
+            size_hint: (None,None)
+            size:(0.65*62,0.65*58)
+            background_normal: 'imagens/graph_icon.jpg'     #imagem quando eu ainda n cliquei no botão
+            background_down: 'imagens/graph_icon.jpg'    #imagem quando eu ainda ja cliquei no botão
+            pos_hint:{'x':0.002,'y':0.22}
+            on_release:
+                root._graph.open()
+
+
+
+        Label:
+            id: Tensao
+            text: "25%"
+            color: 0,0,0
+            font_size:25
+            bold: True
+            halign: 'center'
+            pos_hint:{'x':0.24, 'y':0.37}
+        testeLabel:
+            id:Rotacao
+            pos_hint:{'x':0, 'y':0.1}
+        testeLabel:
+            id:Temperatura
+            pos_hint:{'x':0.15, 'y':0.1}
+        testeLabel:
+            id:Corrente
+            pos_hint:{'x':-0.24, 'y':0.1}
+        BoxLayout:
+            orientation:'vertical'
+            size_hint: (None,None)
+            width:220
+            height:220
+            pos_hint: {'top':0.5, 'right':1}
+
+            Button:
+                id:tempp1
+                text:"tempp1"
+                on_release:root._opcoes.open()
+            Button:
+                id:graficos1
+                text:"graficos1"
+            Button:
+                id:medicoes1
+                text:"medicoes1"
+            Button:
+                id:medicoes1
+                text:"medicoes1"
+            BoxLayout:
+                orientation:'vertical'
+                Label:
+                    id:torqueee
+                    text:"torqueee:"
+                    color:0,0,0
+                Label:
+                    id:Torque
+                    color:0,0,0
+                Label:
+                    id:rotacaooo
+                    text:"rotacaooo"
+                    color:0,0,0
+                
+                Label:
+                    id:Rotacao
+                    color:0,0,0
+       
+
+
+<testeLabel@Label>:
+    text: "25%"
+    color: 0,0,0
+    font_size:25
+    bold: True
+    halign: 'center'

@@ -1,0 +1,178 @@
+#:kivy 2.3.0
+
+<ModbusPopup>
+    title: "Configurações ModBus"
+    size_hint_y: None
+    size_hint_x: 0.4  #40% da largura
+    height: 200  #200 pixel de altura
+    BoxLayout:
+        id: layout
+        orientation:'vertical'
+        GridLayout:
+            cols: 2  #2 colunas
+            rows: 2  #2 linhas
+            Label:
+                text:"IP"
+                font_size:14
+            TextInput:
+                id:txt_ip
+                text:"127.0.0.1"
+                fonte_size:14
+                halign:'center'
+                valigh: 'middle'
+            Label:
+                text:"Porta"
+                font_size:14
+            TextInput:
+                id:txt_porta
+                text:"502"
+                fonte_size:14
+                halign:'center'
+                valigh: 'middle'
+        BoxLayout:
+            orientation:'horizontal'
+            Button:
+                size_hint_y: None
+                height:40
+                text:"Conectar"
+                on_release:
+                    root.clearInfo()
+                    app.root.startDataRead(ip=txt_ip.text,port=int(txt_porta.text))
+            Button:
+                size_hint_y: None
+                height:40
+                text:"Fechar"
+                on_release:
+                    root.dismiss() #esse root fecha a janela do ModbusPopup
+                    root.clearInfo()
+
+<ScanPopup>
+    title: "Configurações ScanTime"
+    size_hint_y: None
+    size_hint_x: 0.4  #40% da largura
+    height: 150  #150 pixel de altura
+    BoxLayout:
+        id: layout
+        orientation:'vertical'
+        GridLayout:
+            cols: 2  #2 colunas
+            rows: 1  #1 linhas
+            Label:
+                text:"ScanTime [ms]"
+                font_size:14
+            TextInput:
+                id:txt_st
+                fonte_size:14
+                halign:'center'
+                valigh: 'middle'
+        BoxLayout:
+            orientation:'horizontal'
+            Button:
+                size_hint_y: None
+                height:40
+                text:"Configurar"
+                on_release:
+                    app.root._scan_time = int(txt_st.text)    #para toda vez q eu pertar o botão configurar o scan_time mudar, tenho que modificaro o atributo _scan_time lá do main widget por isso tambem eu uso o app e nao apenas o root. pois o root seria se fosse no popup mas a modificação é no mainwidget
+            Button:
+                size_hint_y: None
+                height:40
+                text:"Fechar"
+                on_release:
+                    root.dismiss() #esse root fecha a janela do ModbusPopup
+
+
+<ComandBomba>
+    title: "Comando do motor"
+    background_color: 1, 1, 1, 1
+    size_hint_y: None
+    size_hint_x: None
+    height: 300  
+    width: 600
+    BoxLayout:
+        canvas.before:
+            Color:
+                rgba: 1, 1, 1, 1  # Cor de fundo do BoxLayout (vermelho)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        orientation:'horizontal'
+        BoxLayout:
+            orientation:'vertical'
+            Label:
+                text:"Comando da bomba"
+                color: 0,0,0
+            Button:
+                text:"liga"
+                on_release: app.root.liga_motor()
+            Button:
+                text:"desliga"
+                on_release: app.root.desliga_motor()
+            Button:
+                text:"reset"
+                on_release: app.root.reset_motor()
+                
+        BoxLayout:
+            orientation:'vertical'
+            Label:
+                text:"Seleciona tipo da partida"
+                color: 0,0,0
+            Button:
+                text:"Direta"
+                on_release:app.root.escolhadireta()
+            Button:
+                text:"inversor"
+                on_release:app.root.escolhainversor()
+            Button:
+                text:"soft-starter"
+                on_release:app.root.escolhasoft()
+        Label:
+            text:"1"
+            color: 0,0,0
+<DataGraphPopup>
+    title: "Grafico de temperatura da fornalha"
+    BoxLayout:
+        orientation:'verical'
+        TimeSeriesGraph:
+            id:graph
+            xlabel: 'Horário'
+            ylabel: 'Temperatura'
+            background_color:0.5,0.5,0.5,0.5
+            x_ticks_minor: 1  #numero de subdivisões do eixo horizontal
+            x_ticks_major: 5
+            y_ticks_major: 100
+            y_grid_label: True
+            x_grid_label: True
+            padding:5
+            x_grid: True
+            y_grid: True
+            xmin: 0
+            ymin: 0
+            ymax: 500
+
+
+<Temperaturapopoup>
+    title:"Temperatura"
+    BoxLayout:
+        orientation:'vertical'
+        Label:
+            text:"enrolamento fase R:"
+        Label:
+            id:enrolamentoR
+            text:"1"
+            
+        Label:
+            text:"enrolamento fase S:"
+        Label:
+            id:enrolamentoS
+            text:"1"
+        Label:
+            
+            text:"enrolamento fase T:"
+        Label:
+            id:enrolamentoT
+            text:"1"
+        Label:
+            text:"carcaça:"
+        Label:
+            id:temp_carcaca
+            text:"1"
